@@ -46,7 +46,7 @@
 
 	'use strict';
 
-	window.ReactSimpleDayPicker = __webpack_require__(1);
+	window.ReactSimpleTimePicker = __webpack_require__(1);
 
 /***/ },
 /* 1 */
@@ -124,8 +124,8 @@
 	  }
 	});
 
-	var SimplePicker = React.createClass({
-	  displayName: "SimplePicker",
+	var SimpleTimePicker = React.createClass({
+	  displayName: "SimpleTimePicker",
 
 	  getInitialState: function getInitialState(e) {
 	    return { date: '', track: [0, 0, 0] };
@@ -196,7 +196,7 @@
 	});
 
 	module.exports = {
-	  SimplePicker: SimplePicker
+	  SimpleTimePicker: SimpleTimePicker
 	};
 
 /***/ }

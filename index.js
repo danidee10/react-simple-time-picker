@@ -1,1 +1,1 @@
-window.ReactSimpleDayPicker = require('./react-simple-day-picker');
+window.ReactSimpleTimePicker = require('./react-simple-time-picker');

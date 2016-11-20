@@ -68,7 +68,7 @@ var MinutePicker =  React.createClass({
   }
 });
 
-var SimplePicker =  React.createClass({
+var SimpleTimePicker =  React.createClass({
   getInitialState: function(e){
     return {date: '', track: [0, 0, 0]};
   },
@@ -133,5 +133,5 @@ var SimplePicker =  React.createClass({
 });
 
 module.exports = {
-    SimplePicker: SimplePicker
+    SimpleTimePicker: SimpleTimePicker
 }

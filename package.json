@@ -1,12 +1,13 @@
 {
-  "name": "react-simple-day-picker",
-  "version": "1.0.0",
-  "description": "Simple day picker for react",
+  "name": "react-simple-time-picker",
+  "version": "1.0.3",
+  "description": "A Simple time picker for react",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
+    "time",
     "date",
     "day",
     "picker"
