@@ -1,0 +1,28 @@
+{
+  "name": "react-simple-day-picker",
+  "version": "1.0.0",
+  "description": "Simple day picker for react",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "date",
+    "day",
+    "picker"
+  ],
+  "author": "Osaetin Daniel",
+  "repository": "https://github.com/danidee10/react-simple-day-picker",
+  "license": "MIT",
+  "dependencies": {
+    "babel": "^6.5.2",
+    "babel-core": "^6.18.2",
+    "babel-loader": "^6.2.8",
+    "express": "^4.14.0",
+    "webpack": "^1.13.3"
+  },
+  "devDependencies": {
+    "react": "^0.13.3",
+    "babel-preset-react-es2015": "^1.2.0"
+  }
+}
