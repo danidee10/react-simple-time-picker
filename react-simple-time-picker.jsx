@@ -10,7 +10,7 @@ var DayPicker =  React.createClass({
     if(value >= 0 && value <= this.props.days){
       this.setState({day: e.target.value});
 
-      this.props.updateDate({day: value, hour: 0, minute: 0});
+      this.props.updateDate({day: value});
     }
   },
 
@@ -33,7 +33,7 @@ var HourPicker =  React.createClass({
     if(value >= 0 && value <= 23){
       this.setState({hour: e.target.value});
 
-      this.props.updateDate({day: 0, hour: value, minute: 0});
+      this.props.updateDate({hour: value});
     }
   },
 
@@ -56,7 +56,7 @@ var MinutePicker =  React.createClass({
     if(value >= 0 && value <= 59){
       this.setState({minute: e.target.value});
 
-      this.props.updateDate({day: 0, hour: 0, minute: value});
+      this.props.updateDate({minute: value});
     }
   },
 
@@ -70,45 +70,40 @@ var MinutePicker =  React.createClass({
 
 var SimpleTimePicker =  React.createClass({
   getInitialState: function(e){
-    return {date: '', track: [0, 0, 0]};
+    return {date: new Date()};
   },
 
   updateDate: function(date){
-
-    var track = this.state.track.slice();
 
     var day = date.day;
     var hour = date.hour;
     var minute = date.minute;
 
     if(day > 0) {
-      track[0] = day
-      this.setState({track: track});
+      // if it's a day multiply by 24 * 60
+      day *= (24 * 60);
+      this.onChange(day);
 
     }
 
     if(hour > 0){
-      track[1] = hour
-      this.setState({track: track});
+      // multiply by 60
+      hour *= 60;
+      this.onChange(hour)
 
     }
 
     if(minute > 0){
-      track[2] = minute
-      this.setState({track: track});
+      this.onChange(minute);
     }
-
-    this.onChange(track);
 
   },
 
-  onChange: function(date_params){
+  onChange: function(time_var){
 
-    //construct new date object
-    var now = new Date();
-    now.setHours(date_params[0] * 24);
-    now.setHours(date_params[1]);
-    now.setMinutes(date_params[2]);
+    var now = new Date(this.state.date.getTime() + (time_var * 60000));
+
+    this.setState({date: now})
 
     this.props.onChange(now);
 
