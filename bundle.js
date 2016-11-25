@@ -63,17 +63,19 @@
 
 	  onChange: function onChange(e) {
 
+	    var difference = +e.target.value - this.state.day;
 	    var value = e.target.value;
 
 	    if (value >= 0 && value <= this.props.days) {
-	      this.setState({ day: e.target.value });
+	      this.setState({ day: value });
 
-	      this.props.updateDate({ day: value });
+	      this.props.updateDate({ day: difference });
 	    }
 	  },
 
 	  render: function render(e) {
-	    return React.createElement("input", { type: "number", name: "day", required: true, className: "form-control", onChange: this.onChange, value: this.state.day });
+	    return React.createElement("input", { type: "number", name: "day", required: true, className: "form-control",
+	      onChange: this.onChange, value: this.state.day });
 	  }
 	});
 
@@ -86,17 +88,19 @@
 
 	  onChange: function onChange(e) {
 
+	    var difference = +e.target.value - this.state.hour;
 	    var value = e.target.value;
 
 	    if (value >= 0 && value <= 23) {
-	      this.setState({ hour: e.target.value });
+	      this.setState({ hour: value });
 
-	      this.props.updateDate({ hour: value });
+	      this.props.updateDate({ hour: difference });
 	    }
 	  },
 
 	  render: function render() {
-	    return React.createElement("input", { type: "number", name: "hour", required: true, className: "form-control", onChange: this.onChange, value: this.state.hour });
+	    return React.createElement("input", { type: "number", name: "hour", required: true, className: "form-control",
+	      onChange: this.onChange, value: this.state.hour });
 	  }
 	});
 
@@ -109,18 +113,20 @@
 
 	  onChange: function onChange(e) {
 
+	    var difference = +e.target.value - this.state.minute;
 	    var value = e.target.value;
 
 	    if (value >= 0 && value <= 59) {
-	      this.setState({ minute: e.target.value });
+	      this.setState({ minute: value });
 
-	      this.props.updateDate({ minute: value });
+	      this.props.updateDate({ minute: difference });
 	    }
 	  },
 
 	  render: function render() {
 
-	    return React.createElement("input", { type: "number", name: "minutes", required: true, className: "form-control", onChange: this.onChange, value: this.state.minute });
+	    return React.createElement("input", { type: "number", name: "minutes", required: true, className: "form-control",
+	      onChange: this.onChange, value: this.state.minute });
 	  }
 	});
 
@@ -138,28 +144,40 @@
 	    var minute = date.minute;
 
 	    if (day > 0) {
-	      // if it's a day multiply by 24 * 60
-	      day *= 24 * 60;
-	      this.onChange(day);
+	      this.onChange(day, 'day');
 	    }
 
 	    if (hour > 0) {
-	      // multiply by 60
-	      hour *= 60;
-	      this.onChange(hour);
+	      this.onChange(hour, 'hour');
 	    }
 
 	    if (minute > 0) {
-	      this.onChange(minute);
+	      this.onChange(minute, 'minute');
 	    }
 	  },
 
-	  onChange: function onChange(time_var) {
+	  onChange: function onChange(num, time_var) {
 
-	    var now = new Date(this.state.date.getTime() + time_var * 60000 - this.state.date.getTime());
+	    var now = new Date(this.state.date.getTime());
+
+	    switch (time_var) {
+	      case 'day':
+	        num += now.getDate();
+	        now.setDate(num);
+	        break;
+
+	      case 'hour':
+	        num += now.getHours();
+	        now.setHours(num);
+	        break;
+
+	      case 'minute':
+	        num += now.getMinutes();
+	        now.setMinutes(num);
+	        break;
+	    }
 
 	    this.setState({ date: now });
-
 	    this.props.onChange(now);
 	  },
 

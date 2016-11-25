@@ -5,18 +5,20 @@ var DayPicker =  React.createClass({
 
   onChange: function(e){
 
+    var difference = + e.target.value - this.state.day;
     var value = e.target.value;
 
     if(value >= 0 && value <= this.props.days){
-      this.setState({day: e.target.value});
+      this.setState({day: value});
 
-      this.props.updateDate({day: value});
+      this.props.updateDate({day: difference});
     }
   },
 
   render: function(e){
     return (
-      <input type="number" name="day" required className="form-control" onChange={this.onChange} value={this.state.day} />
+      <input type="number" name="day" required className="form-control"
+      onChange={this.onChange} value={this.state.day} />
     )
   }
 });
@@ -28,18 +30,20 @@ var HourPicker =  React.createClass({
 
   onChange: function(e){
 
-    var value = e.target.value
+    var difference = + e.target.value - this.state.hour;
+    var value = e.target.value;
 
     if(value >= 0 && value <= 23){
-      this.setState({hour: e.target.value});
+      this.setState({hour: value});
 
-      this.props.updateDate({hour: value});
+      this.props.updateDate({hour: difference});
     }
   },
 
   render: function(){
     return (
-      <input type="number" name="hour" required className="form-control" onChange={this.onChange} value={this.state.hour} />
+      <input type="number" name="hour" required className="form-control"
+      onChange={this.onChange} value={this.state.hour} />
     )
   }
 });
@@ -51,19 +55,21 @@ var MinutePicker =  React.createClass({
 
   onChange: function(e){
 
-    var value = e.target.value
+    var difference = + e.target.value - this.state.minute;
+    var value = e.target.value;
 
     if(value >= 0 && value <= 59){
-      this.setState({minute: e.target.value});
+      this.setState({minute: value});
 
-      this.props.updateDate({minute: value});
+      this.props.updateDate({minute: difference});
     }
   },
 
   render: function(){
 
     return (
-      <input type="number" name="minutes" required className="form-control" onChange={this.onChange} value={this.state.minute} />
+      <input type="number" name="minutes" required className="form-control"
+      onChange={this.onChange} value={this.state.minute} />
     )
   }
 });
@@ -80,31 +86,41 @@ var SimpleTimePicker =  React.createClass({
     var minute = date.minute;
 
     if(day > 0) {
-      // if it's a day multiply by 24 * 60
-      day *= (24 * 60);
-      this.onChange(day);
-
+      this.onChange(day, 'day');
     }
 
     if(hour > 0){
-      // multiply by 60
-      hour *= 60;
-      this.onChange(hour)
-
+      this.onChange(hour, 'hour');
     }
 
     if(minute > 0){
-      this.onChange(minute);
+      this.onChange(minute, 'minute');
     }
 
   },
 
-  onChange: function(time_var){
+  onChange: function(num, time_var){
 
-    var now = new Date(this.state.date.getTime() + (time_var * 60000));
+    var now = new Date(this.state.date.getTime());
 
-    this.setState({date: now})
+    switch(time_var){
+      case 'day':
+        num += now.getDate();
+        now.setDate(num);
+        break;
 
+      case 'hour':
+        num += now.getHours();
+        now.setHours(num);
+        break;
+
+      case 'minute':
+        num += now.getMinutes();
+        now.setMinutes(num);
+        break;
+    }
+
+    this.setState({date: now});
     this.props.onChange(now);
 
   },
@@ -114,14 +130,13 @@ var SimpleTimePicker =  React.createClass({
     return (
       <div className="input-group">
         <span className="input-group-addon">Day</span>
-        <DayPicker days={this.props.days} updateDate={this.updateDate}/>
+        <DayPicker days={this.props.days} updateDate={this.updateDate} />
 
         <span className="input-group-addon">Hour</span>
         <HourPicker updateDate={this.updateDate} />
 
         <span className="input-group-addon">Min</span>
         <MinutePicker updateDate={this.updateDate} />
-
     </div>
     )
   }
