@@ -1,5 +1,5 @@
 # React Simple Time picker
-A Simple time picker for react (No Calendar, Just Days, hours and Minutes)
+A Simple time picker for react (No Calendar, Just Days, hours and Minutes)...Based on Bootstrap3
 
 ![picker](/assets/picker.png)
 
