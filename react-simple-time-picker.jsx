@@ -1,3 +1,5 @@
+require('./style.css');
+
 var DayPicker =  React.createClass({
   getInitialState: function(e){
     return {day: 0};
@@ -17,7 +19,7 @@ var DayPicker =  React.createClass({
 
   render: function(e){
     return (
-      <input type="number" name="day" required className="form-control"
+      <input type="number" name="day" required className="form-control time-picker"
       onChange={this.onChange} value={this.state.day} />
     )
   }
@@ -42,7 +44,7 @@ var HourPicker =  React.createClass({
 
   render: function(){
     return (
-      <input type="number" name="hour" required className="form-control"
+      <input type="number" name="hour" required className="form-control time-picker"
       onChange={this.onChange} value={this.state.hour} />
     )
   }
@@ -58,7 +60,7 @@ var MinutePicker =  React.createClass({
     var difference = + e.target.value - this.state.minute;
     var value = e.target.value;
 
-    if(value >= 0 && value <= 59){
+    if(value >= 0 && value <= 3000){
       this.setState({minute: value});
 
       this.props.updateDate({minute: difference});
@@ -68,7 +70,7 @@ var MinutePicker =  React.createClass({
   render: function(){
 
     return (
-      <input type="number" name="minutes" required className="form-control"
+      <input type="number" name="minutes" required className="form-control time-picker"
       onChange={this.onChange} value={this.state.minute} />
     )
   }
@@ -85,15 +87,15 @@ var SimpleTimePicker =  React.createClass({
     var hour = date.hour;
     var minute = date.minute;
 
-    if(day > 0) {
+    if(day) {
       this.onChange(day, 'day');
     }
 
-    if(hour > 0){
+    if(hour){
       this.onChange(hour, 'hour');
     }
 
-    if(minute > 0){
+    if(minute){
       this.onChange(minute, 'minute');
     }
 
@@ -128,15 +130,15 @@ var SimpleTimePicker =  React.createClass({
   render: function(){
 
     return (
-      <div className="input-group">
-        <span className="input-group-addon">Day</span>
+      <div className="input-group" style={this.props.style}>
         <DayPicker days={this.props.days} updateDate={this.updateDate} />
+        <small className="days">Days</small>
 
-        <span className="input-group-addon">Hour</span>
         <HourPicker updateDate={this.updateDate} />
+        <small>Hours</small>
 
-        <span className="input-group-addon">Min</span>
         <MinutePicker updateDate={this.updateDate} />
+        <small>Mins</small>
     </div>
     )
   }
